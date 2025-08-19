@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Toggle colonna "Richieste in approvazione" Cartellino Unibo
 // @namespace    http://tampermonkey.net/
-// @version      2.4
-// @description  Nasconde/mostra la colonna "Richieste in approvazione" senza sballare la tabella e ignorando i Totali settimanali e del mese
+// @version      3.1
+// @description  Nasconde/mostra la colonna "Richieste in approvazione" senza sballare la tabella.
 // @match        https://personale-unibo.hrgpi.it/*
 // @grant        none
 // ==/UserScript==
@@ -43,19 +43,29 @@
         let table = document.querySelector("table.table-striped");
         if (!table || richiesteIndex === null) return;
 
+        // Nasconde/mostra la colonna "Richieste in approvazione"
         table.querySelectorAll("tr").forEach(tr => {
             let firstCell = tr.querySelector("td, th");
-            if (firstCell && /Totale\s+(settimanale|del mese)/i.test(firstCell.innerText)) {
-                return;
-            }
+            const isTotalRow = firstCell && /Totale\s+(settimanale|del mese)/i.test(firstCell.innerText);
 
-            let pos = 0;
-            for (let cell of Array.from(tr.children)) {
-                let span = parseInt(cell.getAttribute("colspan") || "1", 10);
-                pos += span;
-                if (pos === richiesteIndex) {
-                    cell.style.display = nascondi ? "none" : "";
-                    break;
+            if (!isTotalRow) {
+                // Per le righe "normali" nasconde la cella
+                let pos = 0;
+                for (let cell of Array.from(tr.children)) {
+                    let span = parseInt(cell.getAttribute("colspan") || "1", 10);
+                    pos += span;
+                    if (pos === richiesteIndex) {
+                        cell.style.display = nascondi ? "none" : "";
+                        break;
+                    }
+                }
+            } else {
+                // Per le righe "Totale" modifica il colspan
+                let currentColspan = parseInt(firstCell.getAttribute("colspan") || "1", 10);
+                if (nascondi) {
+                    firstCell.setAttribute("colspan", currentColspan - 1);
+                } else {
+                    firstCell.setAttribute("colspan", currentColspan + 1);
                 }
             }
         });
@@ -67,7 +77,7 @@
 
         let btn = document.createElement("button");
         btn.type = "button";
-        btn.textContent = "Mostra Richieste";
+        btn.textContent = "Nascondi Richieste";
         btn.style.padding = "6px 12px";
         btn.style.border = "none";
         btn.style.borderRadius = "6px";
@@ -78,7 +88,7 @@
         btn.style.fontSize = "14px";
         btn.style.fontWeight = "600";
         btn.style.marginRight = "auto";
-        btn.style.order = "-1"; // Forza il bottone ad essere il primo elemento
+        btn.style.order = "-1";
 
         btn.addEventListener("click", () => {
             hidden = !hidden;
