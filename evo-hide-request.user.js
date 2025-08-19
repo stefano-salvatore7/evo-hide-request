@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Toggle colonna "Richieste in approvazione" Cartellino Unibo
 // @namespace    http://tampermonkey.net/
-// @version      3.1
+// @version      3.2
 // @description  Nasconde/mostra la colonna "Richieste in approvazione" senza sballare la tabella.
 // @match        https://personale-unibo.hrgpi.it/*
 // @grant        none
@@ -77,7 +77,10 @@
 
         let btn = document.createElement("button");
         btn.type = "button";
-        btn.textContent = "Nascondi Richieste";
+        
+        // Imposta il testo iniziale del pulsante in base allo stato "hidden"
+        btn.textContent = hidden ? "Mostra Richieste" : "Nascondi Richieste";
+
         btn.style.padding = "6px 12px";
         btn.style.border = "none";
         btn.style.borderRadius = "6px";
