@@ -46,7 +46,7 @@
         table.querySelectorAll("tr").forEach(tr => {
             let firstCell = tr.querySelector("td, th");
             if (firstCell && /Totale\s+(settimanale|del mese)/i.test(firstCell.innerText)) {
-                return; // skip i totali
+                return;
             }
 
             let pos = 0;
@@ -62,20 +62,11 @@
     }
 
     function creaBottone() {
-        let container = document.querySelector("span.pt-1.pe-3");
+        let container = document.querySelector("div.d-flex.justify-content-end");
         if (!container) return;
 
-        // Trova il contenitore padre (quello che contiene data + badge verde)
-        let parent = container.parentElement;
-        if (!parent) return;
-
-        // Rendi il contenitore flex per separare sinistra e destra
-        parent.style.display = "flex";
-        parent.style.justifyContent = "space-between";
-        parent.style.alignItems = "center";
-
         let btn = document.createElement("button");
-        btn.type = "button"; // evita refresh pagina
+        btn.type = "button";
         btn.textContent = "Mostra Richieste";
         btn.style.padding = "6px 12px";
         btn.style.border = "none";
@@ -86,6 +77,8 @@
         btn.style.fontFamily = "'Open Sans', sans-serif";
         btn.style.fontSize = "14px";
         btn.style.fontWeight = "600";
+        btn.style.marginRight = "auto";
+        btn.style.order = "-1"; // Forza il bottone ad essere il primo elemento
 
         btn.addEventListener("click", () => {
             hidden = !hidden;
@@ -93,8 +86,7 @@
             btn.textContent = hidden ? "Mostra Richieste" : "Nascondi Richieste";
         });
 
-        // Inserisci bottone come primo figlio (sinistra)
-        parent.insertBefore(btn, parent.firstChild);
+        container.appendChild(btn);
     }
 
     function init() {
@@ -104,11 +96,9 @@
         richiesteIndex = trovaIndiceColonna();
         if (richiesteIndex === null) return;
 
-        // Nascondi di default
         aggiornaColonna(true);
         hidden = true;
 
-        // Crea bottone toggle
         creaBottone();
     }
 
