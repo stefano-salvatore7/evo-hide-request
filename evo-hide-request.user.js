@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Toggle colonna "Richieste in approvazione" Cartellino Unibo
 // @namespace    http://tampermonkey.net/
-// @version      2.3
+// @version      2.4
 // @description  Nasconde/mostra la colonna "Richieste in approvazione" senza sballare la tabella e ignorando i Totali settimanali e del mese
 // @match        https://personale-unibo.hrgpi.it/*
 // @grant        none
