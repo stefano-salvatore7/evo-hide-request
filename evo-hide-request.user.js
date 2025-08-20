@@ -2,7 +2,7 @@
 // @name        EVO - Nascondi Richieste in Approvazione
 // @namespace   https://unibo.it/
 // @version     3.3
-// @description Nasconde/mostra la colonna "Richieste in approvazione" senza sballare la tabella.
+// @description Nasconde/mostra la colonna "Richieste in approvazione" senza sballare la tabella del cartellino.
 // @match       https://personale-unibo.hrgpi.it/*
 // @icon        https://www.unibo.it/favicon.ico
 // @grant       none
