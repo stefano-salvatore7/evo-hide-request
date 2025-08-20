@@ -1,10 +1,11 @@
 // ==UserScript==
-// @name         Toggle colonna "Richieste in approvazione" Cartellino Unibo
-// @namespace    http://tampermonkey.net/
-// @version      3.2
-// @description  Nasconde/mostra la colonna "Richieste in approvazione" senza sballare la tabella.
-// @match        https://personale-unibo.hrgpi.it/*
-// @grant        none
+// @name        EVO - Nascondi Richieste in Approvazione
+// @namespace   https://unibo.it/
+// @version     3.3
+// @description Nasconde/mostra la colonna "Richieste in approvazione" senza sballare la tabella.
+// @match       https://personale-unibo.hrgpi.it/*
+// @icon        https://www.unibo.it/favicon.ico
+// @grant       none
 // ==/UserScript==
 
 (function () {
